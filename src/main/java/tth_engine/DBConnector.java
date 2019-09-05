@@ -79,7 +79,9 @@ public class DBConnector {
 		Document cellDocument = cellCollection.find(new BasicDBObject("location", criteria)).first();
 		
 		try {
+			if(cellDocument != null) {
 			activeCell = mapper.readValue(cellDocument.toJson(), Cell.class);
+			}
 		} catch (IOException e) {
 			System.out.println("Reading Cells into Cell Object failed.");
 		}

@@ -32,7 +32,7 @@ public class CellEditor {
 
 		JFrame window = new JFrame("Cell Editor");
 		JPanel panel = new JPanel(new GridLayout(0, 1));
-		//getUnNestedCellInfo(cell, panel);
+		getUnNestedCellInfo(cell, panel);
 		//makeFormWindow(cell);
 		window.add(panel);
 		window.pack();
@@ -56,12 +56,11 @@ public class CellEditor {
 	}
 
 	private void getInstanceInfo(Instance instance, JPanel panel) {
-		JTextField instanceName = new JTextField(instance.getName());
-
-		JTextField instanceDescription = new JTextField(instance.getDescription());
+		JTextField instanceName = new JTextField((instance) != null ? instance.getName() : "");
+		JTextField instanceDescription = new JTextField((instance) != null ? instance.getDescription() : "");
 
 		//sets level to only integers
-		SpinnerNumberModel model = new SpinnerNumberModel(instance.getMinLevel(), 0, 200, 1);
+		SpinnerNumberModel model = new SpinnerNumberModel((instance) != null ? instance.getMinLevel() : 0, 0, 200, 1);
 		JSpinner instanceMinLevel = new JSpinner(model);
 
 
@@ -76,27 +75,23 @@ public class CellEditor {
 	}
 
 	private JPanel getUnNestedCellInfo(Cell cell, JPanel panel) {
-		
-		JTextField cellDescription = new JTextField(cell.getDescription());
-		
+
+		JTextField cellDescription = new JTextField((cell != null) ? cell.getDescription() : "");
 		JComboBox terrainBox = new JComboBox(Terrain.values());
-		
-		
 		JCheckBox isNorth = new JCheckBox();
-		isNorth.setSelected(cell.isNorth());
-		
 		JCheckBox isSouth = new JCheckBox();
-		isNorth.setSelected(cell.isSouth());
-		
 		JCheckBox isEast = new JCheckBox();
-		isNorth.setSelected(cell.isEast());
-		
 		JCheckBox isWest = new JCheckBox();
-		isNorth.setSelected(cell.isWest());
-		
 		JCheckBox isLocked = new JCheckBox();
-		isNorth.setSelected(cell.isLocked());
-		
+
+		if(cell != null) {
+			isNorth.setSelected(cell.isNorth());
+			isSouth.setSelected(cell.isSouth());
+			isEast.setSelected(cell.isEast());
+			isWest.setSelected(cell.isWest());
+			isLocked.setSelected(cell.isLocked());
+		}
+
 		JPanel directionButtons = new JPanel(new GridLayout(1,4));
 		directionButtons.add(new JLabel("North"));
 		directionButtons.add(isNorth);
@@ -106,7 +101,8 @@ public class CellEditor {
 		directionButtons.add(isEast);
 		directionButtons.add(new JLabel("West"));
 		directionButtons.add(isWest);
-		
+
+
 		panel.add(new JLabel("Cell Description"));
 		panel.add(cellDescription);
 		panel.add(new JLabel("Terrain"));
@@ -115,7 +111,7 @@ public class CellEditor {
 		panel.add(directionButtons);
 		panel.add(new JLabel("Locked"));
 		panel.add(isLocked);
-		
+
 		return panel;
 	}
 }
