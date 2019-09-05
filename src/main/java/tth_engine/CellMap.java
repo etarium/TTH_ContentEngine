@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import pojos.environment.Cell;
 import pojos.environment.Location;
 
 @SuppressWarnings("serial")
@@ -77,7 +78,7 @@ public class CellMap extends JPanel {
 						int y = Character.getNumericValue(charY);
 						int z = 0;
 						Location location = new Location (x, y, z);
-						String cell = connect.getCellByLocation(location);
+						Cell cell = connect.getCellByLocation(location);
 						new CellEditor(cell);
 					}
 				});

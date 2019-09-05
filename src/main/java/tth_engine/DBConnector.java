@@ -65,8 +65,11 @@ public class DBConnector {
 		});
 		return activeCells;
 	}
-	public String getCellByLocation(Location loc) {
-
+	
+	public Cell getCellByLocation(Location loc) {
+		
+		Cell activeCell = new Cell();
+		
 		BasicDBObject criteria = new BasicDBObject();
 		criteria.append("x", loc.getX());
 		criteria.append("y", loc.getY());
@@ -75,6 +78,11 @@ public class DBConnector {
 		MongoCollection<Document> cellCollection = database.getCollection("Cells");
 		Document cellDocument = cellCollection.find(new BasicDBObject("location", criteria)).first();
 		
-		return cellDocument.toJson();
+		try {
+			activeCell = mapper.readValue(cellDocument.toJson(), Cell.class);
+		} catch (IOException e) {
+			System.out.println("Reading Cells into Cell Object failed.");
+		}
+		return activeCell;
 	}
 }

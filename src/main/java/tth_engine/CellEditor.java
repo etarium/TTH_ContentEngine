@@ -1,43 +1,121 @@
 package tth_engine;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
+import pojos.environment.Cell;
+import pojos.environment.Instance;
+import pojos.environment.enums.Terrain;
 
 public class CellEditor {
 	protected final Dimension SCREEN_DIM = Toolkit.getDefaultToolkit().getScreenSize();
 	protected final int SCREEN_WIDTH = SCREEN_DIM.width;
 	protected final int SCREEN_HEIGHT = SCREEN_DIM.height;
 
-	public CellEditor(String cell) {
-		JTextArea cellContent = new JTextArea(cell);
-		int margin = SCREEN_HEIGHT/24;
-		cellContent.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT /2 );
-		cellContent.setMargin(new Insets(margin,margin,margin, margin));
-		cellContent.setLineWrap(true);
-		cellContent.setWrapStyleWord(true);
-		
-//		while(!cell.isEmpty()) {
-//			String tempText = "";
-//			if(cell.length() > 100) {
-//				tempText = cell.substring(0, 100);
-//			} else {
-//				tempText = cell.substring(0, cell.length());
-//			}
-//			cell = cell.replace(tempText, "");
-//			cellContent.setText(cellContent.getText() + "\n" + tempText);
-//			cell.trim();
-//			System.out.println(cell);
-//		}
-		JFrame frame = new JFrame("Cell Editor");
+	public CellEditor(Cell cell) {		
 
-		frame.getContentPane().add(cellContent);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		JFrame window = new JFrame("Cell Editor");
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+		//getUnNestedCellInfo(cell, panel);
+		//makeFormWindow(cell);
+		window.add(panel);
+		window.pack();
+		window.setVisible(true);
+	}
+
+	private JPanel makeFormWindow(Cell cell) {
+		//get all the values
+
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+
+		getInstanceInfo(cell.getInstance(), panel);
+		int result = JOptionPane.showConfirmDialog(null, panel, "Instance Editor",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (result == JOptionPane.OK_OPTION) {
+		} else {
+			System.out.println("Cancelled");
+		}
+
+		return panel;
+	}
+
+	private void getInstanceInfo(Instance instance, JPanel panel) {
+		JTextField instanceName = new JTextField(instance.getName());
+
+		JTextField instanceDescription = new JTextField(instance.getDescription());
+
+		//sets level to only integers
+		SpinnerNumberModel model = new SpinnerNumberModel(instance.getMinLevel(), 0, 200, 1);
+		JSpinner instanceMinLevel = new JSpinner(model);
+
+
+		panel.add(new JLabel("Instance Name"));
+		panel.add(instanceName);
+
+		panel.add(new JLabel("Instance Description"));
+		panel.add(instanceDescription);
+
+		panel.add(new JLabel("Instance Minimum Level"));
+		panel.add(instanceMinLevel);
+	}
+
+	private JPanel getUnNestedCellInfo(Cell cell, JPanel panel) {
+		
+		JTextField cellDescription = new JTextField(cell.getDescription());
+		
+		JComboBox terrainBox = new JComboBox(Terrain.values());
+		
+		
+		JCheckBox isNorth = new JCheckBox();
+		isNorth.setSelected(cell.isNorth());
+		
+		JCheckBox isSouth = new JCheckBox();
+		isNorth.setSelected(cell.isSouth());
+		
+		JCheckBox isEast = new JCheckBox();
+		isNorth.setSelected(cell.isEast());
+		
+		JCheckBox isWest = new JCheckBox();
+		isNorth.setSelected(cell.isWest());
+		
+		JCheckBox isLocked = new JCheckBox();
+		isNorth.setSelected(cell.isLocked());
+		
+		JPanel directionButtons = new JPanel(new GridLayout(1,4));
+		directionButtons.add(new JLabel("North"));
+		directionButtons.add(isNorth);
+		directionButtons.add(new JLabel("South"));
+		directionButtons.add(isSouth);
+		directionButtons.add(new JLabel("East"));
+		directionButtons.add(isEast);
+		directionButtons.add(new JLabel("West"));
+		directionButtons.add(isWest);
+		
+		panel.add(new JLabel("Cell Description"));
+		panel.add(cellDescription);
+		panel.add(new JLabel("Terrain"));
+		panel.add(terrainBox);
+		panel.add(new JLabel("Legal Movement"));
+		panel.add(directionButtons);
+		panel.add(new JLabel("Locked"));
+		panel.add(isLocked);
+		
+		return panel;
 	}
 }
