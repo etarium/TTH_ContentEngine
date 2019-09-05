@@ -16,10 +16,11 @@ public class App
 		
 		DBConnector connect = new DBConnector();	
 		
-		System.out.println("Please Type an Instance Name: ");
-		String instance = console.nextLine();
-		List<Location> locations = connect.getAllCells();
-		List<Cell> cells = connect.getCellsByInstance(instance);
+		//System.out.println("Please Type an Instance Name: ");
+		//String instance = console.nextLine();
+		//List<Location> locations = connect.getAllCells();
+		//List<Cell> cells = connect.getCellsByInstance(instance);
+		List<Cell> cells = connect.getAllCells();
 
 		CellMap.main(args);
 	}

@@ -37,7 +37,7 @@ public class Cell {
 		this.description = description;
 	}
 
-	public String getTerrain() {
+	public String getTerrain() { 
 		return terrain;
 	}
 
@@ -92,5 +92,13 @@ public class Cell {
 //				+ ", enemies=" + enemies + ", isLocked=" + isLocked + ", requiredItems=" + requiredItems + ", north="
 //				+ north + ", south=" + south + ", east=" + east + ", west=" + west + "]";
 //	} 
+
+	@Override
+	public String toString() {
+		return "Cell [_id=" + _id + ", location=" + location + ", description=" + description + ", terrain=" + terrain
+				+ ", isLocked=" + isLocked + ", north=" + north + ", south=" + south + ", east=" + east + ", west="
+				+ west + "]";
+	}
+	
 
 }

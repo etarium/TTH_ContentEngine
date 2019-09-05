@@ -33,7 +33,6 @@ public class CellMap extends JPanel {
 				add(smallPanels[i][j]);
 			}
 		}
-		System.out.println(buttons.length);
 		for (int i = 0; i < buttons.length; i++) {
 			int panelI = i / SML_SIDE;
 			for (int j = 0; j < buttons[i].length; j++) {
@@ -75,7 +74,6 @@ public class CellMap extends JPanel {
 						int x = Character.getNumericValue(charX);
 						int y = Character.getNumericValue(charY);
 						int z = 0;
-						System.out.println(x + "" + y + "" + z);
 						Location location = new Location (x, y, z);
 						Cell cell = connect.getCellByLocation(location);
 						System.out.println(cell);
