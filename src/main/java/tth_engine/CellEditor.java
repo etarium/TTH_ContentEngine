@@ -2,26 +2,28 @@ package tth_engine;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.Toolkit;
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import pojos.entity.EnemyEntity;
+import pojos.entity.NPCEntity;
 import pojos.environment.Cell;
+import pojos.environment.InspectableObjects;
 import pojos.environment.Instance;
 import pojos.environment.enums.Terrain;
+import pojos.items.Item;
+import pojos.items.enums.ItemType;
 
 public class CellEditor {
 	protected final Dimension SCREEN_DIM = Toolkit.getDefaultToolkit().getScreenSize();
@@ -31,9 +33,39 @@ public class CellEditor {
 	public CellEditor(Cell cell) {		
 
 		JFrame window = new JFrame("Cell Editor");
-		JPanel panel = new JPanel(new GridLayout(0, 1));
-		getUnNestedCellInfo(cell, panel);
-		//makeFormWindow(cell);
+		JPanel panel = new JPanel(new GridLayout(0, 3));
+		window.setSize(SCREEN_WIDTH / 4, SCREEN_HEIGHT);
+		window.setBounds(0, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
+		JPanel leftPanel = new JPanel(new GridLayout(0,2));
+		JPanel middlePanel = new JPanel(new GridLayout(0,2));
+		JPanel rightPanel = new JPanel(new GridLayout(0,2));
+		
+		leftPanel.add(new JLabel("Instance Information"));
+		leftPanel.add(getInstanceInfo(cell.getInstance(), new JPanel(new GridLayout(0, 1))));
+		leftPanel.add(new JLabel("Cell Information"));
+		leftPanel.add(getUnNestedCellInfo(cell, new JPanel(new GridLayout(0, 1))));
+		leftPanel.add(new JLabel("Inspectable Item Information"));
+		leftPanel.add(getInspectableObjects(cell.getInspectableObjects(), new JPanel(new GridLayout (0,1))));
+		
+		middlePanel.add(new JLabel("Enemy Information"));
+		//TODO Enemies
+		middlePanel.add(new JLabel("NPC Information"));
+		//TODO NPCs
+		middlePanel.add(new JLabel("Item Information"));
+		middlePanel.add(getItems(cell.getItems(), new JPanel(new GridLayout(0,1))));
+		
+		//DELETE THIS
+		rightPanel.add(new JLabel("Instance Information"));
+		rightPanel.add(getInstanceInfo(cell.getInstance(), new JPanel(new GridLayout(0, 1))));
+		rightPanel.add(new JLabel("Cell Information"));
+		rightPanel.add(getUnNestedCellInfo(cell, new JPanel(new GridLayout(0, 1))));
+		rightPanel.add(new JLabel("Inspectable Item Information"));
+		rightPanel.add(getInspectableObjects(cell.getInspectableObjects(), new JPanel(new GridLayout (0,1))));
+		
+		
+		panel.add(leftPanel);
+		panel.add(middlePanel);
+		panel.add(rightPanel);
 		window.add(panel);
 		window.pack();
 		window.setVisible(true);
@@ -55,7 +87,7 @@ public class CellEditor {
 		return panel;
 	}
 
-	private void getInstanceInfo(Instance instance, JPanel panel) {
+	private JPanel getInstanceInfo(Instance instance, JPanel panel) {
 		JTextField instanceName = new JTextField((instance) != null ? instance.getName() : "");
 		JTextField instanceDescription = new JTextField((instance) != null ? instance.getDescription() : "");
 
@@ -72,12 +104,15 @@ public class CellEditor {
 
 		panel.add(new JLabel("Instance Minimum Level"));
 		panel.add(instanceMinLevel);
+
+		return panel;
 	}
 
 	private JPanel getUnNestedCellInfo(Cell cell, JPanel panel) {
 
 		JTextField cellDescription = new JTextField((cell != null) ? cell.getDescription() : "");
 		JComboBox terrainBox = new JComboBox(Terrain.values());
+		if(cell != null) { terrainBox.setSelectedItem(cell.getTerrain()); }
 		JCheckBox isNorth = new JCheckBox();
 		JCheckBox isSouth = new JCheckBox();
 		JCheckBox isEast = new JCheckBox();
@@ -112,6 +147,89 @@ public class CellEditor {
 		panel.add(new JLabel("Locked"));
 		panel.add(isLocked);
 
+		return panel;
+	}
+
+	private JPanel getInspectableObjects( List<InspectableObjects> objects, JPanel panel) {
+		if(objects != null) {
+			for(InspectableObjects object : objects) {
+
+				JTextField inspectableName = new JTextField((object) != null ? object.getName() : "");
+				JTextField inspectableObject = new JTextField((object) != null ? object.getDescription() : "");
+
+				//TODO
+				//add item and npc windows
+				JButton enemyButton = new JButton("Add/Edit Enemies");
+				JButton itemButton = new JButton("Add/Edit Items");
+
+				JCheckBox isLocked = new JCheckBox();
+				isLocked.setSelected((object) != null ? object.isLocked() : false);
+
+				panel.add(new JLabel("Inspectable Name"));
+				panel.add(inspectableName);
+
+				panel.add(new JLabel("Inspectable Description"));
+				panel.add(inspectableObject);
+
+				panel.add(enemyButton);
+				panel.add(itemButton);
+
+				panel.add(new JLabel("Locked"));
+				panel.add(isLocked);
+			}
+		}
+		return panel;
+	}
+
+	private JPanel getItems(List<Item> items, JPanel panel) {
+		if(items != null) {
+			for(Item item : items) {
+
+				JTextField itemName = new JTextField((item != null) ? item.getName() : "");
+				JTextField itemDescription = new JTextField((item != null) ? item.getDescription() : "");
+				JTextField itemUsedDescription = new JTextField((item != null) ? item.getUsedDescription() : "");
+
+				JComboBox itemTypeBox = new JComboBox(ItemType.values());
+				if(item != null) { itemTypeBox.setSelectedItem(item.getType()); }
+
+				//sets level to only integers
+				SpinnerNumberModel model = new SpinnerNumberModel((item) != null ? item.getMinLevel() : 0, 0, 200, 1);
+				JSpinner itemMinLevel = new JSpinner(model);
+
+				JButton remove = new JButton("Remove " + item!= null ? item.getName() : "Item");
+
+				panel.add(remove);
+				panel.add(new JLabel("Item Name"));
+				panel.add(itemName);
+				panel.add(new JLabel("Item Description"));
+				panel.add(itemDescription);
+				panel.add(new JLabel("Item Used Description"));
+				panel.add(itemUsedDescription);
+				panel.add(new JLabel("Item Type"));
+				panel.add(itemTypeBox);
+				panel.add(new JLabel("Item Minimum Level"));
+				panel.add(itemMinLevel);
+				//TODO
+				//Item Stats
+			}
+		}
+		JButton add = new JButton ("Add Item");
+		panel.add(add);
+
+		return panel;
+	}
+
+	private JPanel getNPCEntities(List<NPCEntity> entities, JPanel panel) {
+
+		return panel;
+	}
+
+	private JPanel getEnemyEntities(List<EnemyEntity> entities, JPanel panel) {
+
+		return panel;
+	}
+
+	private JPanel updateStats(JPanel panel) {
 		return panel;
 	}
 }
