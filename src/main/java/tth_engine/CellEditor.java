@@ -35,7 +35,6 @@ public class CellEditor {
 //		}
 		JFrame frame = new JFrame("Cell Editor");
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(cellContent);
 		frame.pack();
 		frame.setLocationRelativeTo(null);

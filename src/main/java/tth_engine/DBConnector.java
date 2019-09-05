@@ -15,6 +15,9 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import pojos.environment.Cell;
+import pojos.environment.Location;
+
 public class DBConnector {
 	MongoDatabase database;
 	ObjectMapper mapper = new ObjectMapper();

@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import pojos.environment.Location;
+
 @SuppressWarnings("serial")
 public class CellMap extends JPanel {
 	private static DBConnector connect = new DBConnector();

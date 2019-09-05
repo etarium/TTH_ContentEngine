@@ -1,4 +1,4 @@
-package tth_engine;
+package pojos.environment;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
