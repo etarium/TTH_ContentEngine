@@ -75,8 +75,8 @@ public class CellMap extends JPanel {
 						int y = Character.getNumericValue(charY);
 						int z = 0;
 						Location location = new Location (x, y, z);
-						Cell cell = connect.getCellByLocation(location);
-						System.out.println(cell);
+						String cell = connect.getCellByLocation(location);
+						new CellEditor(cell);
 					}
 				});
 			}
