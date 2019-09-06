@@ -3,33 +3,16 @@ package tth_engine;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 
-import pojos.entity.EnemyEntity;
-import pojos.entity.Entity;
-import pojos.entity.NPCEntity;
 import pojos.environment.Cell;
-import pojos.environment.InspectableObjects;
-import pojos.environment.Instance;
-import pojos.environment.enums.Terrain;
-import pojos.items.Item;
-import pojos.items.enums.ItemType;
 
 public class CellEditor {
-	protected final Dimension SCREEN_DIM = Toolkit.getDefaultToolkit().getScreenSize();
-	protected final int SCREEN_WIDTH = SCREEN_DIM.width;
-	protected final int SCREEN_HEIGHT = SCREEN_DIM.height;
+	protected static  final Dimension SCREEN_DIM = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final int SCREEN_WIDTH = SCREEN_DIM.width;
+	public static final int SCREEN_HEIGHT = SCREEN_DIM.height;
 
 	public CellEditor(Cell cell) {		
 
