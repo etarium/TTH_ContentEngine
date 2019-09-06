@@ -27,6 +27,7 @@ public class Cell {
 	boolean south;
 	boolean east;
 	boolean west;
+	boolean canRest;
 
 	public Location getLocation() {
 		return location;
@@ -138,6 +139,14 @@ public class Cell {
 
 	public void setWest(boolean west) {
 		this.west = west;
+	}
+	
+	public boolean canRest() {
+		return canRest;
+	}
+	
+	public void setCanRest(boolean canRest) {
+		this.canRest = canRest;
 	}
 
 	@Override

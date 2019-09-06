@@ -13,9 +13,10 @@ public class CellEditor {
 	protected static  final Dimension SCREEN_DIM = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int SCREEN_WIDTH = SCREEN_DIM.width;
 	public static final int SCREEN_HEIGHT = SCREEN_DIM.height;
+	public static Cell cell = new Cell();
 
-	public CellEditor(Cell cell) {		
-
+	public CellEditor(Cell selectedCell) {		
+		cell = selectedCell;
 		JFrame window = new JFrame("Cell Editor");
 		JPanel panel = new JPanel(new GridLayout(0, 3));
 		window.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));

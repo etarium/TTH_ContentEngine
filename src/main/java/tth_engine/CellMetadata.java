@@ -47,6 +47,7 @@ public class CellMetadata {
 		JCheckBox isEast = new JCheckBox();
 		JCheckBox isWest = new JCheckBox();
 		JCheckBox isLocked = new JCheckBox();
+		JCheckBox canRest = new JCheckBox();
 
 		if(cell != null) {
 			isNorth.setSelected(cell.isNorth());
@@ -54,6 +55,7 @@ public class CellMetadata {
 			isEast.setSelected(cell.isEast());
 			isWest.setSelected(cell.isWest());
 			isLocked.setSelected(cell.isLocked());
+			canRest.setSelected(cell.canRest());
 		}
 
 		JPanel directionButtons = new JPanel(new GridLayout(1,4));
@@ -65,7 +67,12 @@ public class CellMetadata {
 		directionButtons.add(isEast);
 		directionButtons.add(new JLabel("West"));
 		directionButtons.add(isWest);
-
+		
+		JPanel otherButtons = new JPanel(new GridLayout(1,2));
+		otherButtons.add(new JLabel("Locked"));
+		otherButtons.add(isLocked);
+		otherButtons.add(new JLabel("Can Rest"));
+		otherButtons.add(canRest);
 
 		panel.add(new JLabel("Cell Description"));
 		panel.add(cellDescription);
@@ -73,8 +80,7 @@ public class CellMetadata {
 		panel.add(terrainBox);
 		panel.add(new JLabel("Legal Movement"));
 		panel.add(directionButtons);
-		panel.add(new JLabel("Locked"));
-		panel.add(isLocked);
+		panel.add(otherButtons);
 
 		return panel;
 	}
