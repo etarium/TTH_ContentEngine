@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -14,12 +15,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import pojos.environment.Cell;
 import pojos.environment.InspectableObjects;
-import pojos.environment.Location;
 import pojos.items.Item;
 import pojos.items.enums.ItemType;
 
@@ -43,23 +43,7 @@ public class ItemMetadata {
 						itemFrame.setVisible(true);
 					}
 				});
-				JButton itemButton = new JButton("Add/Edit Items");
-				itemButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent evt) {
-						if(object.getItems().isEmpty()) {
-							JFrame itemFrame = addItem();
-							itemFrame.pack();
-							itemFrame.setVisible(true);
-						} else {
-							JFrame itemFrame = new JFrame("Edit Items");
-							JPanel itemPanel = getItems(object.getItems());
-							itemFrame.add(itemPanel);
-							itemFrame.pack();
-							itemFrame.setVisible(true);
-						}
-					}
-				});
+				JButton itemButton = addEditItems(object.getItems());
 				JCheckBox isLocked = new JCheckBox();
 				isLocked.setSelected((object) != null ? object.isLocked() : false);
 
@@ -83,7 +67,24 @@ public class ItemMetadata {
 		return panel;
 	}
 
-	public static JPanel getItems(List<Item> items) {
+	public static JPanel listItems(List<Item> items) {
+		//only shows a list of present items. Not editable.
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+		if (items != null && !items.isEmpty()){
+			for(Item item : items) {
+				JTextArea itemName = new JTextArea((item.getName() != null) ? item.getName() : "");
+				itemName.setEditable(false);
+				panel.add(itemName);
+			}
+		} else {
+			panel.add(new JLabel("No Items"));
+		}
+		JButton addItem = addEditItems(items);
+		panel.add(addItem);
+		return panel;
+	}
+
+	public static JPanel editItems(List<Item> items) {
 		JPanel panel = new JPanel(new GridLayout(0,2));
 		JPanel itemPanel;
 		JPanel statPanel;
@@ -117,13 +118,12 @@ public class ItemMetadata {
 				itemPanel.add(new JLabel("Item Minimum Level"));
 				itemPanel.add(itemMinLevel);
 				itemPanel.add(remove);
-				//itemPanel.add(statPanel);
 				itemPanel.add(new JLabel("\n"));
 				panel.add(itemPanel);
 				panel.add(statPanel);
 			}
 		} else {
-			panel.add(new JLabel("No Items in this Cell"));
+			panel.add(new JLabel("No Items"));
 		}
 		JButton addItem = new JButton ("Add Item");
 		addItem.addActionListener(new ActionListener() {
@@ -174,5 +174,28 @@ public class ItemMetadata {
 
 		frame.add(panel);
 		return frame;
+	}
+
+	public static JButton addEditItems(List<Item> items) {
+		JButton button = new JButton("Add/Edit Items");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+
+				if(items == null || items.isEmpty()) {
+					JFrame itemFrame = addItem();
+					itemFrame.pack();
+					itemFrame.setVisible(true);
+				} else {
+					JFrame itemFrame = new JFrame("Edit Items");
+					JPanel itemPanel = editItems(items);
+					itemFrame.add(itemPanel);
+					itemFrame.pack();
+					itemFrame.setVisible(true);
+				}
+			}
+		});
+
+		return button;
 	}
 }

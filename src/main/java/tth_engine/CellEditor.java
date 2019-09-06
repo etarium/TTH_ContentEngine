@@ -37,7 +37,7 @@ public class CellEditor {
 		middlePanel.add(new JLabel("NPC Information"));
 		middlePanel.add(EntityMetadata.getNPCEntities(cell.getNpcs(), new JPanel(new GridLayout(0,1))));
 		middlePanel.add(new JLabel("Item Information"));
-		middlePanel.add(ItemMetadata.getItems(cell.getItems()));
+		middlePanel.add(ItemMetadata.listItems(cell.getItems()));
 
 		rightPanel.add(SharedButtons.buttonPanel());
 		panel.add(leftPanel);
