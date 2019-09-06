@@ -3,6 +3,8 @@ package pojos.environment;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.conversions.Bson;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import pojos.entity.EnemyEntity;
@@ -12,7 +14,6 @@ import pojos.items.Item;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Cell {
 	
-	String _id;
 	Location location;
 	Instance instance;
 	String description;
@@ -28,6 +29,10 @@ public class Cell {
 	boolean east;
 	boolean west;
 	boolean canRest;
+
+	public boolean isCanRest() {
+		return canRest;
+	}
 
 	public Location getLocation() {
 		return location;
@@ -154,7 +159,7 @@ public class Cell {
 		return "Cell [location=" + location + ", instance=" + instance + ", description=" + description + ", terrain="
 				+ terrain + ", inspectableObjects=" + inspectableObjects + ", items=" + items + ", npcs=" + npcs
 				+ ", enemies=" + enemies + ", isLocked=" + isLocked + ", requiredItems=" + requiredItems + ", north="
-				+ north + ", south=" + south + ", east=" + east + ", west=" + west + "]";
+				+ north + ", south=" + south + ", east=" + east + ", west=" + west + ", canRest=" + canRest + "]";
 	} 
 
 }

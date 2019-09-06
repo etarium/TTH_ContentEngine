@@ -23,17 +23,17 @@ import pojos.items.Item;
 import pojos.items.enums.ItemType;
 
 public class ItemMetadata {
-
+	
+	public static List<InspectableObjects> newInspectableObjects = new ArrayList<InspectableObjects>();
 
 	public static JPanel getInspectableObjects( List<InspectableObjects> objects, JPanel panel) {
 		if(objects != null) {
 			for(InspectableObjects object : objects) {
 
 				JTextField inspectableName = new JTextField((object) != null ? object.getName() : "");
-				JTextField inspectableObject = new JTextField((object) != null ? object.getDescription() : "");
-
-				//TODO
-				//add item and npc windows
+				JTextField inspectableDescription = new JTextField((object) != null ? object.getDescription() : "");
+				
+				
 				JButton enemyButton = new JButton("Add/Edit Enemies");
 				enemyButton.addActionListener(new ActionListener() {
 					@Override
@@ -46,12 +46,18 @@ public class ItemMetadata {
 				JButton itemButton = addEditItems(object.getItems());
 				JCheckBox isLocked = new JCheckBox();
 				isLocked.setSelected((object) != null ? object.isLocked() : false);
-
+				
+				InspectableObjects newObject = new InspectableObjects();
+				newObject.setLocked(isLocked.isSelected());
+				newObject.setName(inspectableName.getText());
+				newObject.setDescription(inspectableDescription.getText());
+				newInspectableObjects.add(newObject);
+				
 				panel.add(new JLabel("Inspectable Name"));
 				panel.add(inspectableName);
 
 				panel.add(new JLabel("Inspectable Description"));
-				panel.add(inspectableObject);
+				panel.add(inspectableDescription);
 
 				panel.add(enemyButton);
 				panel.add(itemButton);
@@ -64,6 +70,7 @@ public class ItemMetadata {
 		}
 		JButton addObject = new JButton ("Add Inspectable Object");
 		panel.add(addObject);
+		panel.add(SharedButtons.saveInspectableObjectButton(newInspectableObjects));
 		return panel;
 	}
 
@@ -105,6 +112,12 @@ public class ItemMetadata {
 				SpinnerNumberModel model = new SpinnerNumberModel((item) != null ? item.getMinLevel() : 0, 0, 200, 1);
 				JSpinner itemMinLevel = new JSpinner(model);
 
+				item.setName(itemName.getText());
+				item.setDescription(itemDescription.getText());
+				item.setUsedDescription(itemUsedDescription.getText());
+				item.setType((ItemType) itemTypeBox.getSelectedItem());
+				item.setMinLevel((int) itemMinLevel.getValue()); 
+				
 				JButton remove = new JButton("Remove Item");
 				remove.addActionListener(new ActionListener() {
 					@Override

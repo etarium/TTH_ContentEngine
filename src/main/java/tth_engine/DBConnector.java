@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +50,8 @@ public class DBConnector {
 				Cell tempCell = mapper.readValue(cell.toJson(), Cell.class);
 				activeCells.add(tempCell);
 			} catch (IOException e) {
+				System.out.println("Reading Cells into Cell Object failed.");
+				System.out.println(e);
 			}
 		});
 		return activeCells;
@@ -58,12 +61,14 @@ public class DBConnector {
 		List<Cell> activeCells = new ArrayList();
 		MongoCollection<Document> cellCollection = database.getCollection("Cells");
 		Iterable<Document> cellDocuments = cellCollection.find(eq("instance.name", instance));
+		System.out.println(cellDocuments);
 		cellDocuments.forEach(cell -> {
 			try {
 				Cell tempCell = mapper.readValue(cell.toJson(), Cell.class);
 				activeCells.add(tempCell);
 			} catch (IOException e) {
 				System.out.println("Reading Cells into Cell Object failed.");
+				System.out.println(e);
 			}
 		});
 		return activeCells;
@@ -95,8 +100,21 @@ public class DBConnector {
 		MongoCollection<Document> cellCollection = database.getCollection("Cells");
 		try {
 			String cellString = mapper.writeValueAsString(cell);
+			String originalCellString = mapper.writeValueAsString(CellEditor.originalCell.getLocation());
 			Document cellDocument = Document.parse(cellString);
-			cellCollection.insertOne(cellDocument);
+			Document update = new Document();
+			update.append("$set",  cellDocument);
+			if(CellEditor.originalCell.getLocation() != null) {
+				System.out.println(CellEditor.originalCell);
+				Document query = new Document();
+				query.append("location", originalCellString);
+				
+			cellCollection.updateOne(query, update);
+			} else {
+				System.out.println(CellEditor.originalCell);
+				System.out.println("hit else case");
+				cellCollection.insertOne(cellDocument);
+			}
 			
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
