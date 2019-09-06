@@ -8,12 +8,15 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.util.JSON;
 
 import pojos.environment.Cell;
 import pojos.environment.Location;
@@ -30,7 +33,7 @@ public class DBConnector {
 		String pass = config.getProperty("password");
 		String dbName = config.getProperty("database");
 		MongoClientURI uri = new MongoClientURI(
-				"mongodb+srv://"+user+":"+pass+"@thetwistinghaunt-shard-00-01-hh6b2.mongodb.net/admin");
+				"mongodb+srv://"+user+":"+pass+"@thetwistinghaunt-shard-00-00-hh6b2.mongodb.net/admin?ssl=true&replicaSet=TheTwistingHaunt-shard-0&readPreference=secondary");
 
 		MongoClient mongoClient = new MongoClient(uri);
 		database = mongoClient.getDatabase(dbName);
@@ -86,5 +89,19 @@ public class DBConnector {
 			System.out.println("Reading Cells into Cell Object failed.");
 		}
 		return activeCell;
+	}
+
+	public void writeCell(Cell cell) {
+		MongoCollection<Document> cellCollection = database.getCollection("Cells");
+		try {
+			String cellString = mapper.writeValueAsString(cell);
+			Document cellDocument = Document.parse(cellString);
+			cellCollection.insertOne(cellDocument);
+			
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -163,6 +164,19 @@ public class ItemMetadata {
 		SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 200, 1);
 		JSpinner itemMinLevel = new JSpinner(model);
 
+		//actually read the data to a pojo
+		Item item = new Item();
+		item.setName(itemName.getText());
+		item.setDescription(itemDescription.getText());
+		item.setUsedDescription(itemUsedDescription.getText());
+		item.setType((ItemType) itemTypeBox.getSelectedItem());
+		item.setMinLevel((int) itemMinLevel.getValue()); 
+		//item.setStats();
+		List<Item> itemList = new ArrayList<Item>();
+		itemList.add(item);
+		JPanel buttonPanel = new JPanel(new GridLayout(0, 2));
+		buttonPanel.add(SharedButtons.saveItemsInCell(itemList));
+		
 		itemPanel.add(new JLabel("Item Name"));
 		itemPanel.add(itemName);
 		itemPanel.add(new JLabel("Item Description"));
@@ -173,7 +187,8 @@ public class ItemMetadata {
 		itemPanel.add(itemTypeBox);
 		itemPanel.add(new JLabel("Item Minimum Level"));
 		itemPanel.add(itemMinLevel);
-		itemPanel.add(SharedButtons.buttonPanel());
+		
+		itemPanel.add(buttonPanel);
 
 		panel.add(itemPanel);
 		panel.add(statPanel);

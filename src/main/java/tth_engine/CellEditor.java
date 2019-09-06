@@ -15,10 +15,10 @@ public class CellEditor {
 	public static final int SCREEN_WIDTH = SCREEN_DIM.width;
 	public static final int SCREEN_HEIGHT = SCREEN_DIM.height;
 	public static Cell cell = new Cell();
-
-	public CellEditor(Cell selectedCell, Location location) {		
+	public static JFrame window = new JFrame("Cell Editor");
+	public CellEditor(Cell selectedCell) {		
 		cell = selectedCell;
-		JFrame window = new JFrame("Cell Editor");
+		
 		JPanel panel = new JPanel(new GridLayout(0, 3));
 		window.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		JPanel leftPanel = new JPanel(new GridLayout(0,2));
@@ -39,7 +39,7 @@ public class CellEditor {
 		middlePanel.add(new JLabel("Item Information"));
 		middlePanel.add(ItemMetadata.listItems(cell.getItems()));
 
-		rightPanel.add(SharedButtons.buttonPanel());
+		rightPanel.add(SharedButtons.mainWindowButtonPanel());
 		panel.add(leftPanel);
 		panel.add(middlePanel);
 		panel.add(rightPanel);
