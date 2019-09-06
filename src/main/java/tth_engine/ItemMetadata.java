@@ -1,11 +1,9 @@
 package tth_engine;
 
-import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -24,6 +22,7 @@ import pojos.items.Item;
 import pojos.items.enums.ItemType;
 
 public class ItemMetadata {
+
 
 	public static JPanel getInspectableObjects( List<InspectableObjects> objects, JPanel panel) {
 		if(objects != null) {
@@ -106,6 +105,12 @@ public class ItemMetadata {
 				JSpinner itemMinLevel = new JSpinner(model);
 
 				JButton remove = new JButton("Remove Item");
+				remove.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent evt) {
+						items.remove(item);
+					}
+				});
 
 				itemPanel.add(new JLabel("Item Name"));
 				itemPanel.add(itemName);
@@ -137,6 +142,7 @@ public class ItemMetadata {
 		JPanel farBottomPanel = new JPanel();
 		farBottomPanel.add(addItem);
 		panel.add(farBottomPanel, "Add Item");
+
 		return panel;
 	}
 

@@ -12,8 +12,6 @@ public class App
 	
 	public static void main( String[] args )
 	{
-		
-		DBConnector connect = new DBConnector();	
 
 		CellMap.main(args);
 	}
