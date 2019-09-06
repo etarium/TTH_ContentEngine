@@ -1,5 +1,6 @@
 package tth_engine;
 
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -34,8 +35,31 @@ public class ItemMetadata {
 				//TODO
 				//add item and npc windows
 				JButton enemyButton = new JButton("Add/Edit Enemies");
+				enemyButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent evt) {
+						JFrame itemFrame = addItem();
+						itemFrame.pack();
+						itemFrame.setVisible(true);
+					}
+				});
 				JButton itemButton = new JButton("Add/Edit Items");
-
+				itemButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent evt) {
+						if(object.getItems().isEmpty()) {
+							JFrame itemFrame = addItem();
+							itemFrame.pack();
+							itemFrame.setVisible(true);
+						} else {
+							JFrame itemFrame = new JFrame("Edit Items");
+							JPanel itemPanel = getItems(object.getItems());
+							itemFrame.add(itemPanel);
+							itemFrame.pack();
+							itemFrame.setVisible(true);
+						}
+					}
+				});
 				JCheckBox isLocked = new JCheckBox();
 				isLocked.setSelected((object) != null ? object.isLocked() : false);
 
@@ -51,40 +75,52 @@ public class ItemMetadata {
 				panel.add(new JLabel("Locked"));
 				panel.add(isLocked);
 			}
+		} else {
+			panel.add(new JLabel("No Inspectable Objects in this Cell"));
 		}
+		JButton addObject = new JButton ("Add Inspectable Object");
+		panel.add(addObject);
 		return panel;
 	}
 
-	public static JPanel getItems(List<Item> items, JPanel panel) {
+	public static JPanel getItems(List<Item> items) {
+		JPanel panel = new JPanel(new GridLayout(0,2));
+		JPanel itemPanel;
+		JPanel statPanel;
 		if(items != null) {
 			for(Item item : items) {
-
-				JTextField itemName = new JTextField((item != null) ? item.getName() : "");
-				JTextField itemDescription = new JTextField((item != null) ? item.getDescription() : "");
-				JTextField itemUsedDescription = new JTextField((item != null) ? item.getUsedDescription() : "");
+				//reinitialize them back to empty at each iteration
+				statPanel = new JPanel();
+				itemPanel = new JPanel(new GridLayout(0,1));
+				statPanel = StatMetadata.updateStats(item.getStats());
+				JTextField itemName = new JTextField((item.getName() != null) ? item.getName() : "");
+				JTextField itemDescription = new JTextField((item.getDescription() != null) ? item.getDescription() : "");
+				JTextField itemUsedDescription = new JTextField((item.getUsedDescription() != null) ? item.getUsedDescription() : "");
 
 				JComboBox itemTypeBox = new JComboBox(ItemType.values());
-				if(item != null) { itemTypeBox.setSelectedItem(item.getType()); }
+				if(item.getType() != null) { itemTypeBox.setSelectedItem(item.getType()); }
 
 				//sets level to only integers
 				SpinnerNumberModel model = new SpinnerNumberModel((item) != null ? item.getMinLevel() : 0, 0, 200, 1);
 				JSpinner itemMinLevel = new JSpinner(model);
 
-				JButton remove = new JButton("Remove " + item!= null ? item.getName() : "Item");
+				JButton remove = new JButton("Remove Item");
 
-				panel.add(remove);
-				panel.add(new JLabel("Item Name"));
-				panel.add(itemName);
-				panel.add(new JLabel("Item Description"));
-				panel.add(itemDescription);
-				panel.add(new JLabel("Item Used Description"));
-				panel.add(itemUsedDescription);
-				panel.add(new JLabel("Item Type"));
-				panel.add(itemTypeBox);
-				panel.add(new JLabel("Item Minimum Level"));
-				panel.add(itemMinLevel);
-				//TODO
-				//Item Stats
+				itemPanel.add(new JLabel("Item Name"));
+				itemPanel.add(itemName);
+				itemPanel.add(new JLabel("Item Description"));
+				itemPanel.add(itemDescription);
+				itemPanel.add(new JLabel("Item Used Description"));
+				itemPanel.add(itemUsedDescription);
+				itemPanel.add(new JLabel("Item Type"));
+				itemPanel.add(itemTypeBox);
+				itemPanel.add(new JLabel("Item Minimum Level"));
+				itemPanel.add(itemMinLevel);
+				itemPanel.add(remove);
+				//itemPanel.add(statPanel);
+				itemPanel.add(new JLabel("\n"));
+				panel.add(itemPanel);
+				panel.add(statPanel);
 			}
 		} else {
 			panel.add(new JLabel("No Items in this Cell"));
@@ -98,8 +134,9 @@ public class ItemMetadata {
 				itemFrame.setVisible(true);
 			}
 		});
-		panel.add(addItem);
-
+		JPanel farBottomPanel = new JPanel();
+		farBottomPanel.add(addItem);
+		panel.add(farBottomPanel, "Add Item");
 		return panel;
 	}
 
@@ -131,9 +168,10 @@ public class ItemMetadata {
 		itemPanel.add(new JLabel("Item Minimum Level"));
 		itemPanel.add(itemMinLevel);
 		itemPanel.add(SharedButtons.buttonPanel());
+
 		panel.add(itemPanel);
 		panel.add(statPanel);
-		
+
 		frame.add(panel);
 		return frame;
 	}

@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import pojos.environment.Cell;
+import pojos.environment.Location;
 
 public class CellEditor {
 	protected static  final Dimension SCREEN_DIM = Toolkit.getDefaultToolkit().getScreenSize();
@@ -15,7 +16,7 @@ public class CellEditor {
 	public static final int SCREEN_HEIGHT = SCREEN_DIM.height;
 	public static Cell cell = new Cell();
 
-	public CellEditor(Cell selectedCell) {		
+	public CellEditor(Cell selectedCell, Location location) {		
 		cell = selectedCell;
 		JFrame window = new JFrame("Cell Editor");
 		JPanel panel = new JPanel(new GridLayout(0, 3));
@@ -36,10 +37,9 @@ public class CellEditor {
 		middlePanel.add(new JLabel("NPC Information"));
 		middlePanel.add(EntityMetadata.getNPCEntities(cell.getNpcs(), new JPanel(new GridLayout(0,1))));
 		middlePanel.add(new JLabel("Item Information"));
-		middlePanel.add(ItemMetadata.getItems(cell.getItems(), new JPanel(new GridLayout(0,1))));
+		middlePanel.add(ItemMetadata.getItems(cell.getItems()));
 
-//		rightPanel.add(cancelButton);
-//		rightPanel.add(saveButton);
+		rightPanel.add(SharedButtons.buttonPanel());
 		panel.add(leftPanel);
 		panel.add(middlePanel);
 		panel.add(rightPanel);
@@ -48,7 +48,4 @@ public class CellEditor {
 		window.setVisible(true);
 	}
 
-	private JPanel updateStats(JPanel panel) {
-		return panel;
-	}
 }

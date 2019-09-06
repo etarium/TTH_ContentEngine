@@ -13,7 +13,7 @@ public class EntityMetadata {
 	
 	public static JPanel getNPCEntities(List<Entity> entities, JPanel panel) {
 		if(entities != null) {
-
+			//TODO
 		} else {
 			panel.add(new JLabel("No NPCs in this Cell"));
 		}
@@ -25,7 +25,7 @@ public class EntityMetadata {
 
 	public static JPanel getEnemyEntities(List<EnemyEntity> entities, JPanel panel) {
 		if(entities != null) {
-
+			//TODO
 		} else {
 			panel.add(new JLabel("No Enemies in this Cell"));
 		}
