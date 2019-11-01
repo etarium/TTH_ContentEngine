@@ -26,6 +26,7 @@ public class SharedButtons {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 			//	CellEditor.cell.setLocation(location);
+				System.out.println("&&&&&&&&&&&&&&&&& save to DB\n" + CellEditor.cell.getItems());
 				connect.writeCell(CellEditor.cell);
 			}
 		});
@@ -49,6 +50,7 @@ public class SharedButtons {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				CellEditor.cell.setItems(items);
+				
 			}
 		});
 		return save;

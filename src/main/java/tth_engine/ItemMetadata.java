@@ -176,20 +176,33 @@ public class ItemMetadata {
 		//sets level to only integers
 		SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 200, 1);
 		JSpinner itemMinLevel = new JSpinner(model);
-
-		//actually read the data to a pojo
-		Item item = new Item();
-		item.setName(itemName.getText());
-		item.setDescription(itemDescription.getText());
-		item.setUsedDescription(itemUsedDescription.getText());
-		item.setType((ItemType) itemTypeBox.getSelectedItem());
-		item.setMinLevel((int) itemMinLevel.getValue()); 
-		//item.setStats();
-		List<Item> itemList = new ArrayList<Item>();
-		itemList.add(item);
-		JPanel buttonPanel = new JPanel(new GridLayout(0, 2));
-		buttonPanel.add(SharedButtons.saveItemsInCell(itemList));
 		
+		//item.setStats();
+//		JPanel buttonPanel = new JPanel(new GridLayout(0, 2));
+		
+//		System.out.println(itemList);
+//		buttonPanel.add(SharedButtons.saveItemsInCell(itemList));
+		
+		JButton save = new JButton("Save");
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				
+				System.out.println("SaveButton Hit");
+				//actually read the data to a pojo
+				Item item = new Item();
+				item.setName(itemName.getText());
+				item.setDescription(itemDescription.getText());
+				item.setUsedDescription(itemUsedDescription.getText());
+				item.setType((ItemType) itemTypeBox.getSelectedItem());
+				item.setMinLevel((int) itemMinLevel.getValue());
+				List<Item> itemList = new ArrayList<Item>();
+				itemList.add(item);
+				CellEditor.cell.setItems(itemList);
+				System.out.println("******\n" + CellEditor.cell.getItems());
+			}
+		});
+	
 		itemPanel.add(new JLabel("Item Name"));
 		itemPanel.add(itemName);
 		itemPanel.add(new JLabel("Item Description"));
@@ -201,7 +214,7 @@ public class ItemMetadata {
 		itemPanel.add(new JLabel("Item Minimum Level"));
 		itemPanel.add(itemMinLevel);
 		
-		itemPanel.add(buttonPanel);
+		itemPanel.add(save);
 
 		panel.add(itemPanel);
 		panel.add(statPanel);

@@ -3,8 +3,6 @@ package pojos.environment;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.conversions.Bson;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import pojos.entity.EnemyEntity;
