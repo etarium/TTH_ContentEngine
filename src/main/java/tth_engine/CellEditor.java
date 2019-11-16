@@ -21,7 +21,7 @@ public class CellEditor {
 	public CellEditor(Cell selectedCell) {		
 		originalCell = selectedCell;
 		cell = originalCell;
-		
+		window = new JFrame(cell.getLocation().toString());
 		JPanel panel = new JPanel(new GridLayout(0, 3));
 		window.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		JPanel leftPanel = new JPanel(new GridLayout(0,2));
@@ -42,7 +42,7 @@ public class CellEditor {
 		middlePanel.add(new JLabel("Item Information"));
 		middlePanel.add(ItemMetadata.listItems(cell.getItems()));
 
-		rightPanel.add(SharedButtons.mainWindowButtonPanel());
+		rightPanel.add(SharedButtons.mainWindowButtonPanel(cell));
 		panel.add(leftPanel);
 		panel.add(middlePanel);
 		panel.add(rightPanel);

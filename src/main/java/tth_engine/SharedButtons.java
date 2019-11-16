@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import pojos.entity.EnemyEntity;
 import pojos.entity.Entity;
-import pojos.entity.NPCEntity;
+import pojos.environment.Cell;
 import pojos.environment.InspectableObjects;
 import pojos.items.Item;
 
@@ -26,7 +26,7 @@ public class SharedButtons {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 			//	CellEditor.cell.setLocation(location);
-				System.out.println("&&&&&&&&&&&&&&&&& save to DB\n" + CellEditor.cell.getItems());
+				System.out.println("&&&&&&&&&&&&&&&&& save to DB\n");
 				connect.writeCell(CellEditor.cell);
 			}
 		});
@@ -123,11 +123,30 @@ public class SharedButtons {
 		return cancel;
 	}
 	
+	public static JButton saveCellMetadataButton(Cell cell) {
+		JButton save = new JButton("Save");
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+			//	CellEditor.cell.setLocation(location);
+				System.out.println("&&&&&&&&&&&&&&&&& save to DB\n");
+				CellEditor.cell = cell;
+				connect.writeCell(CellEditor.cell);
+			}
+		});
+		
+		return save;
+	}
 	
-	public static JPanel mainWindowButtonPanel() {
+	public static JPanel mainWindowButtonPanel(Cell cell) {
 		JPanel buttonPanel = new JPanel(new GridLayout(0,2));
-		buttonPanel.add(makeSaveButton());
+
+
+		buttonPanel.add(saveCellMetadataButton(cell));
 		buttonPanel.add(makeCancelButton());
+		
+//		buttonPanel.add(makeSaveButton());
+//		buttonPanel.add(makeCancelButton());
 		
 		return buttonPanel;
 	}

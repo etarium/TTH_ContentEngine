@@ -24,7 +24,6 @@ public class CellMetadata {
 		SpinnerNumberModel model = new SpinnerNumberModel((instance) != null ? instance.getMinLevel() : 0, 0, 200, 1);
 		JSpinner instanceMinLevel = new JSpinner(model);
 
-
 		panel.add(new JLabel("Instance Name"));
 		panel.add(instanceName);
 
