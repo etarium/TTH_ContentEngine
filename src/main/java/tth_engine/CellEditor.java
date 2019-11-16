@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import pojos.environment.Cell;
-import pojos.environment.Location;
 
 public class CellEditor {
 	protected static  final Dimension SCREEN_DIM = Toolkit.getDefaultToolkit().getScreenSize();
