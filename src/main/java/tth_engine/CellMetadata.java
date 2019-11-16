@@ -36,11 +36,11 @@ public class CellMetadata {
 		return panel;
 	}
 
-	public static JPanel getUnNestedCellInfo(Cell cell, JPanel panel) {
+	public static JPanel getUnNestedCellInfo( JPanel panel) {
 
-		JTextField cellDescription = new JTextField((cell != null) ? cell.getDescription() : "");
+		JTextField cellDescription = new JTextField((CellEditor.cell != null) ? CellEditor.cell.getDescription() : "");
 		JComboBox terrainBox = new JComboBox(Terrain.values());
-		if(cell != null) { terrainBox.setSelectedItem(cell.getTerrain()); }
+		if(CellEditor.cell != null) { terrainBox.setSelectedItem(CellEditor.cell.getTerrain()); }
 		JCheckBox isNorth = new JCheckBox();
 		JCheckBox isSouth = new JCheckBox();
 		JCheckBox isEast = new JCheckBox();
@@ -48,13 +48,13 @@ public class CellMetadata {
 		JCheckBox isLocked = new JCheckBox();
 		JCheckBox canRest = new JCheckBox();
 
-		if(cell != null) {
-			isNorth.setSelected(cell.isNorth());
-			isSouth.setSelected(cell.isSouth());
-			isEast.setSelected(cell.isEast());
-			isWest.setSelected(cell.isWest());
-			isLocked.setSelected(cell.isLocked());
-			canRest.setSelected(cell.canRest());
+		if(CellEditor.cell != null) {
+			isNorth.setSelected(CellEditor.cell.isNorth());
+			isSouth.setSelected(CellEditor.cell.isSouth());
+			isEast.setSelected(CellEditor.cell.isEast());
+			isWest.setSelected(CellEditor.cell.isWest());
+			isLocked.setSelected(CellEditor.cell.isLocked());
+			canRest.setSelected(CellEditor.cell.canRest());
 		}
 
 		JPanel directionButtons = new JPanel(new GridLayout(1,4));

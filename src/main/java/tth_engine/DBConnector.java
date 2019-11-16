@@ -100,18 +100,18 @@ public class DBConnector {
 		MongoCollection<Document> cellCollection = database.getCollection("Cells");
 		try {
 			String cellString = mapper.writeValueAsString(cell);
-			String originalCellString = mapper.writeValueAsString(CellEditor.originalCell.getLocation());
+			String originalCellString = mapper.writeValueAsString(CellEditor.cell.getLocation());
 			Document cellDocument = Document.parse(cellString);
 			Document update = new Document();
 			update.append("$set",  cellDocument);
-			if(CellEditor.originalCell.getLocation() != null) {
-				System.out.println(CellEditor.originalCell);
+			if(CellEditor.cell.getLocation() != null) {
+				System.out.println(CellEditor.cell);
 				Document query = new Document();
 				query.append("location", originalCellString);
 				
 			cellCollection.updateOne(query, update);
 			} else {
-				System.out.println(CellEditor.originalCell);
+				System.out.println(CellEditor.cell);
 				System.out.println("hit else case");
 				cellCollection.insertOne(cellDocument);
 			}

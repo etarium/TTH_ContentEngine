@@ -1,7 +1,6 @@
 package tth_engine;
 
 import java.util.Scanner;
-
 /**
  * Hello world!
  *
@@ -14,5 +13,7 @@ public class App
 	{
 
 		CellMap.main(args);
+		
+		
 	}
 }

@@ -123,14 +123,14 @@ public class SharedButtons {
 		return cancel;
 	}
 	
-	public static JButton saveCellMetadataButton(Cell cell) {
+	public static JButton saveCellMetadataButton() {
 		JButton save = new JButton("Save");
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 			//	CellEditor.cell.setLocation(location);
 				System.out.println("&&&&&&&&&&&&&&&&& save to DB\n");
-				CellEditor.cell = cell;
+				//CellEditor.cell = cell;
 				connect.writeCell(CellEditor.cell);
 			}
 		});
@@ -138,11 +138,11 @@ public class SharedButtons {
 		return save;
 	}
 	
-	public static JPanel mainWindowButtonPanel(Cell cell) {
+	public static JPanel mainWindowButtonPanel() {
 		JPanel buttonPanel = new JPanel(new GridLayout(0,2));
 
 
-		buttonPanel.add(saveCellMetadataButton(cell));
+		buttonPanel.add(saveCellMetadataButton());
 		buttonPanel.add(makeCancelButton());
 		
 //		buttonPanel.add(makeSaveButton());

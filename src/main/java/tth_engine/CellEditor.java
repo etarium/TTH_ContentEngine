@@ -19,8 +19,7 @@ public class CellEditor {
 	public static JFrame window = new JFrame("Cell Editor");
 	
 	public CellEditor(Cell selectedCell) {		
-		originalCell = selectedCell;
-		cell = originalCell;
+		cell = selectedCell;
 		window = new JFrame(cell.getLocation().toString());
 		JPanel panel = new JPanel(new GridLayout(0, 3));
 		window.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -31,7 +30,7 @@ public class CellEditor {
 		leftPanel.add(new JLabel("Instance Information"));
 		leftPanel.add(CellMetadata.getInstanceInfo(cell.getInstance(), new JPanel(new GridLayout(0, 1))));
 		leftPanel.add(new JLabel("Cell Information"));
-		leftPanel.add(CellMetadata.getUnNestedCellInfo(cell, new JPanel(new GridLayout(0, 1))));
+		leftPanel.add(CellMetadata.getUnNestedCellInfo(new JPanel(new GridLayout(0, 1))));
 		leftPanel.add(new JLabel("Inspectable Item Information"));
 		leftPanel.add(ItemMetadata.getInspectableObjects(cell.getInspectableObjects(), new JPanel(new GridLayout (0,1))));
 
@@ -42,7 +41,7 @@ public class CellEditor {
 		middlePanel.add(new JLabel("Item Information"));
 		middlePanel.add(ItemMetadata.listItems(cell.getItems()));
 
-		rightPanel.add(SharedButtons.mainWindowButtonPanel(cell));
+		rightPanel.add(SharedButtons.mainWindowButtonPanel());
 		panel.add(leftPanel);
 		panel.add(middlePanel);
 		panel.add(rightPanel);
