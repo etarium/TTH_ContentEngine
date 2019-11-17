@@ -6,8 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import pojos.entity.EnemyEntity;
-import pojos.entity.Entity;
+import entity.EnemyEntity;
+import entity.Entity;
 
 public class EntityMetadata {
 	

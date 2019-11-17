@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-import pojos.Statblock;
+import general.Statblock;
 
 public class StatMetadata {
 

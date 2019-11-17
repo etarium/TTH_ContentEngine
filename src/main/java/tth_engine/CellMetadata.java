@@ -10,9 +10,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import pojos.environment.Cell;
-import pojos.environment.Instance;
-import pojos.environment.enums.Terrain;
+import environment.Cell;
+import environment.Instance;
+import environment.enums.Terrain;
 
 public class CellMetadata {
 

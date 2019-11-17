@@ -8,11 +8,11 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import pojos.entity.EnemyEntity;
-import pojos.entity.Entity;
-import pojos.environment.Cell;
-import pojos.environment.InspectableObjects;
-import pojos.items.Item;
+import entity.EnemyEntity;
+import entity.Entity;
+import environment.Cell;
+import environment.InspectableObjects;
+import items.Item;
 
 
 public class SharedButtons {

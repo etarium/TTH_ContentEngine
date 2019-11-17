@@ -7,6 +7,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<!-- <name>Dev</name> <url>http://maven.apache.org</url> -->
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
 	<repositories>
 		<repository>
 			<id>github</id>
@@ -14,9 +19,6 @@
 			<url>https://maven.pkg.github.com/etarium/TTH_EntityLibrary</url>
 		</repository>
 	</repositories>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.mongodb</groupId>
@@ -46,9 +48,22 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>TTH_EntityLibrary</groupId>
-			<artifactId>TTH_EntityLibrary</artifactId>
-			<version>0.0.1</version>
+			<groupId>twistinghaunt</groupId>
+			<artifactId>entitylibrary</artifactId>
+			<version>0.0.3</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

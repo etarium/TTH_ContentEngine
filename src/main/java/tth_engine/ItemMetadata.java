@@ -18,9 +18,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import pojos.environment.InspectableObjects;
-import pojos.items.Item;
-import pojos.items.enums.ItemType;
+import environment.InspectableObjects;
+import items.Item;
+import items.enums.ItemType;
 
 public class ItemMetadata {
 	
